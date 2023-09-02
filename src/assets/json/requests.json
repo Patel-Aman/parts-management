@@ -1,0 +1,35 @@
+[
+  {
+    "id": "REQ001",
+    "from": "John Doe",
+    "date": "2023-09-01",
+    "status": "Pending",
+    "parts": [
+      { "name": "Part A", "quantity": 5 },
+      { "name": "Part B", "quantity": 3 },
+      { "name": "Part C", "quantity": 2 }
+    ]
+  },
+  {
+    "id": "REQ002",
+    "from": "Jane Smith",
+    "date": "2023-09-02",
+    "status": "Approved",
+    "parts": [
+      { "name": "Part X", "quantity": 4 },
+      { "name": "Part Y", "quantity": 2 },
+      { "name": "Part Z", "quantity": 1 }
+    ]
+  },
+  {
+    "id": "REQ003",
+    "from": "Alice Johnson",
+    "date": "2023-09-03",
+    "status": "Rejected",
+    "parts": [
+      { "name": "Part P", "quantity": 6 },
+      { "name": "Part Q", "quantity": 1 },
+      { "name": "Part R", "quantity": 3 }
+    ]
+  }
+]

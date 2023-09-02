@@ -1,0 +1,20 @@
+[
+  {
+    "sku": "SKU123",
+    "name": "Spare Part 1",
+    "description": "Description for Part 1",
+    "quantity": 10,
+    "manufacturer": "Manufacturer A",
+    "model": "Model X",
+    "partType": "Type A"
+  },
+  {
+    "sku": "SKU456",
+    "name": "Spare Part 2",
+    "description": "Description for Part 2",
+    "quantity": 5,
+    "manufacturer": "Manufacturer B",
+    "model": "Model Y",
+    "partType": "Type B"
+  }
+]
