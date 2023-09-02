@@ -9,13 +9,20 @@ const Profile = () => {
         role: "Service Center",
         email: "johndoe@example.com",
         username: "johndoe123",
+        EmployedAt: "Laxmi Service Center",
     };
+    // profileData = await apiConfig.get("/auth/user");
+    console.log(profileData);
+    // try {
+    // } catch (error) {
+    //     console.log(error.msg);
+    // }
 
     return (
         <div>
             <PageTitle>Profile</PageTitle>
             <Card>
-                <CardBody classname="flex items-center">
+                <CardBody className="flex items-center">
                     <div className="overflow-hidden rounded-t-lg mt-4 ml-4">
                         <img
                             src={ProfileImg}
@@ -32,14 +39,18 @@ const Profile = () => {
                             {profileData.role}
                         </p>
                         <br />
-                        <p classname="font-gray-400">Email address:</p>
+                        <p className="font-gray-400">Email address:</p>
                         <p className="font-semibold text-lg">
                             {profileData.email}
                         </p>
                         <br />
-                        <p classname="font-gray-400">Username:</p>
+                        <p className="font-gray-400">Username:</p>
                         <p className="font-semibold text-lg">
                             {profileData.username}
+                        </p>
+                        <p className="font-gray-4000">Enmployed At:</p>
+                        <p className="font-semibold text-lg">
+                            {profileData.EmployedAt}
                         </p>
                     </div>
                 </CardBody>

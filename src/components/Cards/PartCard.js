@@ -1,11 +1,5 @@
 import React from "react";
-import {
-    Card,
-    Dropdown,
-    DropdownItem,
-    Badge,
-    Avatar,
-} from "@windmill/react-ui";
+import { Card, Badge } from "@windmill/react-ui";
 import DefaultPartImg from "../../assets/img/default-part.png";
 
 function PartCard({ part }) {

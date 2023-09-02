@@ -147,7 +147,7 @@ function Header() {
                             onClose={() => setIsProfileMenuOpen(false)}
                         >
                             <Link to="/app/profile">
-                                <DropdownItem tag="a" href="#">
+                                <DropdownItem>
                                     <OutlinePersonIcon
                                         className="w-4 h-4 mr-3"
                                         aria-hidden="true"
@@ -155,7 +155,7 @@ function Header() {
                                     <span>Profile</span>
                                 </DropdownItem>
                             </Link>
-                            <DropdownItem tag="a" href="#">
+                            <DropdownItem>
                                 <OutlineCogIcon
                                     className="w-4 h-4 mr-3"
                                     aria-hidden="true"

@@ -26,9 +26,6 @@ function Login() {
             username: UnameorEmail,
             password: password,
         };
-        console.log(
-            `username: ${loginData.username}, password:${loginData.password}`
-        );
 
         try {
             const response = await apiConfig.post("/auth/login", loginData);
@@ -36,6 +33,11 @@ function Login() {
             if (data.success) {
                 // Handle successful login
                 document.cookie = data.msg.split(";")[0];
+                localStorage.setItem(
+                    "token",
+                    JSON.stringify(data.msg.split(";")[0])
+                );
+                console.log(localStorage.getItem("token"));
                 console.log("User logged in:");
             } else {
                 // Handle login error
