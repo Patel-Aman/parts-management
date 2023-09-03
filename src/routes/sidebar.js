@@ -12,36 +12,6 @@ const routes = [
         name: "Dashboard", // name that appear in Sidebar
     },
     {
-        path: "/app/forms",
-        icon: "FormsIcon",
-        name: "Forms",
-    },
-    {
-        path: "/app/cards",
-        icon: "CardsIcon",
-        name: "Cards",
-    },
-    {
-        path: "/app/charts",
-        icon: "ChartsIcon",
-        name: "Charts",
-    },
-    {
-        path: "/app/buttons",
-        icon: "ButtonsIcon",
-        name: "Buttons",
-    },
-    {
-        path: "/app/modals",
-        icon: "ModalsIcon",
-        name: "Modals",
-    },
-    {
-        path: "/app/tables",
-        icon: "TablesIcon",
-        name: "Tables",
-    },
-    {
         path: "/app/parts",
         icon: "ToolsIcon",
         name: "Parts",
@@ -60,33 +30,6 @@ const routes = [
         path: "/app/service",
         icon: "ServiceCenterIcon",
         name: "Service Center",
-    },
-    {
-        icon: "PagesIcon",
-        name: "Pages",
-        routes: [
-            // submenu
-            {
-                path: "/login",
-                name: "Login",
-            },
-            {
-                path: "/create-account",
-                name: "Create account",
-            },
-            {
-                path: "/forgot-password",
-                name: "Forgot password",
-            },
-            {
-                path: "/app/404",
-                name: "404",
-            },
-            {
-                path: "/app/blank",
-                name: "Blank",
-            },
-        ],
     },
 ];
 
