@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button, Label, Select } from "@windmill/react-ui";
+import { Input, Button, Label } from "@windmill/react-ui";
 
 function AddProductForm({ onAddProduct }) {
     const [product, setProduct] = useState({
@@ -9,8 +9,8 @@ function AddProductForm({ onAddProduct }) {
         manufacturer: "",
         model: "",
         deviceType: "",
-        description:"",
-        releaseDate:""
+        description: "",
+        releaseDate: "",
     });
 
     const handleChange = (e) => {
@@ -138,7 +138,6 @@ function AddProductForm({ onAddProduct }) {
             </Button>
         </form>
     );
-
 }
 
 export default AddProductForm;

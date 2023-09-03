@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import ProductModelCard from "../components/Cards/ProductModelCard";
-import ModelData from "../assets/json/models.json";
 import apiConfig from "../utils/apiConfig";
 import PageTitle from "../components/Typography/PageTitle";
 import AddProductForm from "../components/Forms/AddProductForm";

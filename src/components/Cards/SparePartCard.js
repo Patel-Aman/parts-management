@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from "react";
-import { Card, Badge } from "@windmill/react-ui";
+import React from "react";
 import DefaultPartImg from "../../assets/img/default-part.png";
-import apiConfig from "../../utils/apiConfig";
 
 function SparePartCard({ sparePart }) {
     const releaseDate = new Date(sparePart.releaseDate);
     const formattedDate = `${releaseDate.getDate()}-${
         releaseDate.getMonth() + 1
-    }-${releaseDate.getFullYear()}`
+    }-${releaseDate.getFullYear()}`;
     return (
         <div className="border border-gray-200 rounded-lg p-4">
             {/* Part Image */}
@@ -25,7 +23,9 @@ function SparePartCard({ sparePart }) {
                 <h2 className="text-xl font-semibold">{sparePart.name}</h2>
 
                 {/* SKU ID */}
-                <p className="text-sm text-gray-500">SKU ID: {sparePart.skuid}</p>
+                <p className="text-sm text-gray-500">
+                    SKU ID: {sparePart.skuid}
+                </p>
 
                 {/* Description */}
                 <p className="text-gray-600">{sparePart.description}</p>
@@ -37,7 +37,6 @@ function SparePartCard({ sparePart }) {
                 <p className="text-gray-600">{formattedDate}</p>
             </div>
         </div>
-
     );
 }
 

@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import { Card, Badge } from "@windmill/react-ui";
 import DefaultPartImg from "../../assets/img/default-part.png";
-import apiConfig from "../../utils/apiConfig";
 
 function PartCard({ part }) {
     return (
@@ -19,13 +18,19 @@ function PartCard({ part }) {
                 {/* Part Details */}
                 <div className="flex-1 ml-4">
                     {/* SKU ID */}
-                    <p className="text-sm text-gray-500">SKU ID: {part.spareParts.skuid}</p>
+                    <p className="text-sm text-gray-500">
+                        SKU ID: {part.spareParts.skuid}
+                    </p>
 
                     {/* Part Name */}
-                    <h2 className="text-xl font-semibold">{part.spareParts.name}</h2>
+                    <h2 className="text-xl font-semibold">
+                        {part.spareParts.name}
+                    </h2>
 
                     {/* Description */}
-                    <p className="text-gray-600">{part.spareParts.description}</p>
+                    <p className="text-gray-600">
+                        {part.spareParts.description}
+                    </p>
 
                     {/* Part Type */}
                     <p className="mt-2">
@@ -34,7 +39,7 @@ function PartCard({ part }) {
                 </div>
             </div>
 
-                {/* Additional Details */}
+            {/* Additional Details */}
             <div className="border-t border-gray-200 p-4">
                 <div className="grid grid-cols-2 gap-4">
                     {/* Quantity */}

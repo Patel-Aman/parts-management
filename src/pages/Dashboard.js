@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import CTA from "../components/CTA";
 import InfoCard from "../components/Cards/InfoCard";

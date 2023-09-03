@@ -11,16 +11,19 @@ import axios from "axios";
 
 function Login() {
     const [user, setUser] = useState({
-        email:"",password:"",username:"",role:"ServiceCentre"
-    })
+        email: "",
+        password: "",
+        username: "",
+        role: "ServiceCentre",
+    });
     const [place, setPlace] = useState("Delhi Mall");
     const [zone, setZone] = useState("North");
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setUser({...user, [name]: value})
-    }
+        setUser({ ...user, [name]: value });
+    };
 
     const roles = [
         "ServiceCentre",
@@ -29,19 +32,9 @@ function Login() {
         "CustomerSupport",
     ];
 
-    const places = [
-        "Laxmi",
-        "Delhi Mall",
-        "Kolkata Mall",
-        "Telugu Mall",
-    ];
+    const places = ["Laxmi", "Delhi Mall", "Kolkata Mall", "Telugu Mall"];
 
-    const zones = [
-        "North",
-        "East",
-        "South",
-        "west",
-    ];
+    const zones = ["North", "East", "South", "west"];
 
     const handlePlaceChange = (e) => {
         setPlace(e.target.value);
@@ -55,19 +48,19 @@ function Login() {
         e.preventDefault();
 
         let registerData = user;
-        if(user.role === "ServiceCentre") {
-             registerData = { ...registerData , employeeAt: place};
+        if (user.role === "ServiceCentre") {
+            registerData = { ...registerData, employeeAt: place };
         }
 
-        if(user.role === "WareHouseTeam") {
-            registerData = { ...registerData , employeeAt: zone};
+        if (user.role === "WareHouseTeam") {
+            registerData = { ...registerData, employeeAt: zone };
         }
 
         console.log(registerData);
 
         try {
             const response = await axios.post(
-                "http://172.31.11.249:8000/api/v1/auth/register",
+                "http://localhost:8000/api/v1/auth/register",
                 registerData
             );
             const data = response.data;
@@ -88,7 +81,12 @@ function Login() {
         }
 
         // Reset the form
-        setUser({email:"",password:"",username:"",role:"ServiceCentre"});
+        setUser({
+            email: "",
+            password: "",
+            username: "",
+            role: "ServiceCentre",
+        });
         setPlace("Delhi Mall");
         setZone("North");
     };
@@ -160,7 +158,7 @@ function Login() {
                                     </div>
                                 </div>
                             </Label>
-                            {user.role==="ServiceCentre" &&
+                            {user.role === "ServiceCentre" && (
                                 <Label>
                                     <span>Select Place</span>
                                     <div className="relative inline-block w-full">
@@ -171,7 +169,10 @@ function Login() {
                                             name="place"
                                         >
                                             {places.map((place) => (
-                                                <option key={place} value={place}>
+                                                <option
+                                                    key={place}
+                                                    value={place}
+                                                >
                                                     {place}
                                                 </option>
                                             ))}
@@ -181,9 +182,9 @@ function Login() {
                                         </div>
                                     </div>
                                 </Label>
-                            }
+                            )}
 
-                            {user.role==="WareHouseTeam" &&
+                            {user.role === "WareHouseTeam" && (
                                 <Label>
                                     <span>Select Zone</span>
                                     <div className="relative inline-block w-full">
@@ -204,7 +205,7 @@ function Login() {
                                         </div>
                                     </div>
                                 </Label>
-                            }
+                            )}
                             <Label className="mt-4">
                                 <span>Password</span>
                                 <Input

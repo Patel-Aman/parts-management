@@ -1,194 +1,254 @@
-<p align="center">
-    <a href="https://windmillui.com/dashboard-react">
-      <img alt="Windmill Dashboard React" width="600" src=".github/windmill-dashboard-react.png">
-    </a><br>
-    Four 100 scores and PWA ready. Just connect your data.
-</p>
+<!-- <a href="https://aimeos.org/">
+    <img src="https://aimeos.org/fileadmin/template/icons/logo.png" alt="Aimeos logo" title="Aimeos" align="right" height="60" />
+</a> -->
 
-🚀 [See it live](https://windmillui.com/dashboard-react)
+# Xiaomi Parts-management project
 
-This is not a template. This is a complete application, built on top of React, with all tiny details taken care of so you just need to bring the data to feed it.
+[![License](https://poser.pugx.org/aimeos/aimeos-typo3/license.svg)](https://www.gnu.org/licenses/agpl-3.0.en.html)
 
-Accessibility is a priority in my projects and I think it should be in yours too, so this was developed listening to real screen readers, focus traps and keyboard navigation are available everywhere.
+<!-- :star: Star us on GitHub — it motivates us a lot! -->
 
-## 📦 Features
+This project is part of [Ode2Code 3.0](https://unstop.com/competitions/xiaomi-ode2code-30-xiaomi-india-713806) competition organized by [Xiaomi](https://www.mi.com). This is frontend of the project developed using Reactjs, tailwind, axios and a template provided by windmill. Frontend includes login, register, profile pages and dashboard for all 4 types of stakeholders. (Planning, Warehouse, Service Centres, and Customer Support teams.).
 
-- 🦮 Throughly accessible (developed using screen readers)
-- 🌗 Dark theme enabled (load even different images based on theme)
-- 🧩 Multiple (custom) components
-- ⚡ Code splitting
-- Tailwind CSS
-- [Windmill React UI](https://windmillui.com/react-ui)
-- React Router
-- Heroicons
-- Chart.js
-- PWA delivering offline-first and app-like experience
+-   Service centers can create spare parts request and access spare parts available, add spare parts, add customers.
+-   Warehouse receives request from service centers via planning team and dispatches the parts to service centers.
+-   Planning team will recieve parts request from service centers and assign warehouse to the queries.
+-   Customer Support Team will have access to available parts at different service centers and can assign/send a customer to a service center as per parts requirement.
 
-## 📚 Docs
+![aimeos-frontend](https://user-images.githubusercontent.com/8647429/212348410-55cbaa00-722a-4a30-8b57-da9e173e0675.jpg)
 
-### General components
+## Table Of Content
 
-Windmill Dashboard React is built on top of [Windmill React UI](https://windmillui.com/react-ui). You will find the documentation for every small component there.
+-   [Installation](#installation)
+    -   [Composer](#composer)
+    -   [DDev or Colima](#ddev)
+    -   [TER](#ter-extension)
+-   [TYPO3 setup](#typo3-setup)
+    -   [Database setup](#database-setup)
+    -   [Security](#security)
+-   [Page setup](#page-setup)
+    -   [Download the Aimeos Page Tree t3d file](#download-the-aimeos-page-tree-t3d-file)
+    -   [Go to the Import View](#go-to-the-import-view)
+    -   [Upload the page tree file](#upload-the-page-tree-file)
+    -   [Go to the import view](#go-to-the-import-view)
+    -   [Import the page tree](#import-the-page-tree)
+    -   [SEO-friendly URLs](#seo-friendly-urls)
+-   [License](#license)
+-   [Links](#links)
 
-### Routing
+## Installation
 
-Routes in Windmill Dashboard are separated into two categories, sidebar ([routes/sidebar.js](src/routes/sidebar.js)) and general ([routes/index.js](src/routes/index.js)).
+This document is for the latest Aimeos TYPO3 **22.10 release and later**.
 
-#### Sidebar routes
+-   stable release: 23.04 (TYPO3 12 LTS)
+-   LTS release: 22.10 (TYPO3 11 LTS)
 
-These are the routes that will show in the sidebar. They expect three properties:
+### Composer
 
-- `path`: the destination;
-- `name`: the name to be shown;
-- `icon`: an icon to illustrate the item
+**Note:** composer 2.1+ is required!
 
-Item that are used as dropdowns, like the Pages option, don't need a `path`, but expect a `routes` array of objects with `path` and `name`:
+The latest TYPO3 version can be installed via composer. This is especially useful, if you want to create new TYPO3 installations automatically or play with the latest code. You need to install the composer package first, if it isn't already available:
 
-```js
-// sidebar.js
-{
-  path: '/app/tables',
-  icon: 'TablesIcon',
-  name: 'Tables',
-},
-{
-  icon: 'PagesIcon', // <-- this is used as a submenu, so no path
-  name: 'Pages',
-  routes: [
-    // submenu
-    {
-      path: '/login',
-      name: 'Login', // <-- these don't have icons
-    },
-    {
-      path: '/create-account',
-      name: 'Create account',
-    },
+```bash
+php -r "readfile('https://getcomposer.org/installer');" | php -- --filename=composer
 ```
 
-#### General (Router) routes
+To install the TYPO3 base distribution first, execute this command:
 
-These are **internal** (private) routes. They will be rendered inside the app, using the default `containers/Layout`.
-
-If you want to add a route to, let's say, a landing page, you should add it to the `App`'s router ([src/App.js](src/App.js), exactly like `Login`, `CreateAccount` and other pages are routed.
-
-#### How to add a new page to router?
-
-1. Create your page inside `src/pages`, say `MyPage.js`;
-2. Add it to the global router (`src/routes/index.js`)
-
-```js
-const MyPage = lazy(() => import('../pages/MyPage'))
+```bash
+composer create-project typo3/cms-base-distribution myshop
+# or install a specific TYPO3 version:
+composer create-project "typo3/cms-base-distribution:^12" myshop
 ```
 
-Then add it to the `routes` array:
+It will install TYPO3 into the `./myshop/` directory. Change into the directory and install TYPO3 as usual:
 
-```js
-{
-  path: '/my-page', // the url that will be added to /app/
-  component: MyPage, // the page component you jsut imported
-}
+```bash
+cd ./myshop
+touch public/FIRST_INSTALL
 ```
 
-3. If you want to make this page accessible from the sidebar, you have to options:
+Open the TYPO3 URL in your browser and follow the setup steps. Afterwards, install the Aimeos extension using:
 
-- add it to the root `routes` array
-
-```js
-{
-  path: '/app/my-page', // /app + the url you added in routes/index.js
-  icon: 'HomeIcon', // the component being exported from src/icons/index.js
-  name: 'My Page', // name that appear in Sidebar
-},
+```bash
+composer req -W aimeos/aimeos-typo3:~23.7
 ```
 
-- add it as an option under a dropdown
+If composer complains that one or more packages can't be installed because the required minimum stability isn't met, add this to your `composer.json`:
 
-```js
-{
-  icon: 'PagesIcon',
-  name: 'Pages',
-  routes: [
-    // submenu
-    {
-      path: '/app/my-page',
-      name: 'My Page',
-    },
+```json
+"minimum-stability": "dev",
+"prefer-stable": true,
 ```
 
-If you're asking where does this `/app` come from, it is from this line inside `src/App.js`, that renders the app:
+If you want a more or less working installation out of the box for new installations, you can install the Bootstrap package too:
 
-```jsx
-<Route path="/app" component={Layout} />
+```bash
+composer req bk2k/bootstrap-package
 ```
 
----
+**_Note_**: Remember to create a root page and a root template, which includes the Bootstrap package templates! (See also below.)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Finally, depending on your TYPO3 version, run the following commands from your installation directory:
 
-## Available Scripts
+**For TYPO3 11:**
 
-In the project directory, you can run:
+```bash
+php ./vendor/bin/typo3 extension:setup
+php ./vendor/bin/typo3 aimeos:setup --option=setup/default/demo:1
+```
 
-### `npm start`
+If you don't want to add the Aimeos demo data, you should remove `--option=setup/default/demo:1` from the Aimeos setup command.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**For TYPO3 10:**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```bash
+php ./vendor/bin/typo3 extension:activate scheduler
+php ./vendor/bin/typo3 extension:activate aimeos
+```
 
-### `npm test`
+If you experience any errors with the database, please check the [Database Setup](#database-setup) section below.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Please keep on reading below the "TER Extension" installation section!
 
-### `npm run build`
+### DDev
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+_Note:_ Installation instructions for TYPO3 with `ddev` or `Colima` can be found here:
+[TYPO3 with ddev or colima](https://ddev.readthedocs.io/en/latest/users/quickstart/)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### TER Extension
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If you want to install Aimeos into a traditionally installed TYPO3 ("legacy installation"), the [Aimeos extension from the TER](https://typo3.org/extensions/repository/view/aimeos) is recommended. You can download and install it directly from the Extension Manager of your TYPO3 instance.
 
-### `npm run eject`
+-   Log into the TYPO3 backend
+-   Click on "Admin Tools::Extensions" in the left navigation
+-   Click the icon with the little plus sign left from the Aimeos list entry
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![Install Aimeos TYPO3 extension](https://user-images.githubusercontent.com/213803/211545083-d0820b63-26f2-453e-877f-ecd5ec128713.jpg)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Afterwards, you have to execute the update script of the extension to create the required database structure:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+-   Click on "Admin Tools::Upgrade"
+-   Click "Run Upgrade Wizard" in the "Upgrade Wizard" tile
+-   Click "Execute"
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![Execute update script](https://user-images.githubusercontent.com/213803/211545122-8fd94abd-78b2-47ad-ad3c-1ef1b9c052b4.jpg)
 
-## Learn More
+#### Aimeos Distribution
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+For new TYPO3 installations, there is a 1-click [Aimeos distribution](https://typo3.org/extensions/repository/view/aimeos_dist) available, too. Choose the Aimeos distribution from the list of available distributions in the Extension Manager and you will get a completely set up shop system including demo data for a quick start.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## TYPO3 Setup
 
-### Code Splitting
+Setup TYPO3 by creating a `FIRST_INSTALL` file in the `./public` directory:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```bash
+touch public/FIRST_INSTALL
+```
 
-### Analyzing the Bundle Size
+Open the URL of your installation in the browser and follow the steps in the TYPO3 setup scripts.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Database Setup
 
-### Making a Progressive Web App
+If you use MySQL < 5.7.8, you have to use `utf8` and `utf8_unicode_ci` instead because those MySQL versions can't handle the long indexes created by `utf8mb4` (up to four bytes per character) and you will get errors like
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+```
+1071 Specified key was too long; max key length is 767 bytes
+```
 
-### Advanced Configuration
+To avoid that, change your database settings in your `./typo3conf/LocalConfiguration.php` to:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+```php
+    'DB' => [
+        'Connections' => [
+            'Default' => [
+                'tableoptions' => [
+                    'charset' => 'utf8',
+                    'collate' => 'utf8_unicode_ci',
+                ],
+                // ...
+            ],
+        ],
+    ],
+```
 
-### Deployment
+### Security
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Since **TYPO3 9.5.14+** implements **SameSite cookie handling** and restricts when browsers send cookies to your site. This is a problem when customers are redirected from external payment provider domain. Then, there's no session available on the confirmation page. To circumvent that problem, you need to set the configuration option `cookieSameSite` to `none` in your `./typo3conf/LocalConfiguration.php`:
 
-### `npm run build` fails to minify
+```php
+    'FE' => [
+        'cookieSameSite' => 'none'
+    ]
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Site Setup
+
+TYPO3 10+ requires a site configuration which you have to add in "Site Management" > "Sites" available in the left navigation. When creating a root page (a page with a globe icon), a basic site configuration is automatically created (see below at [Go to the Import View](#go-to-the-import-view)).
+
+## Page Setup
+
+### Download the Aimeos Page Tree t3d file
+
+The page setup for an Aimeos web shop is easy, if you import the example page tree for TYPO3 10/11. You can download the version you need from here:
+
+-   [23.4+ page tree](https://aimeos.org/fileadmin/download/Aimeos-pages_2023.04.t3d) and later
+-   [22.10 page tree](https://aimeos.org/fileadmin/download/Aimeos-pages_2022.10.t3d)
+-   [21.10 page tree](https://aimeos.org/fileadmin/download/Aimeos-pages_21.10.t3d)
+
+**Note:** The Aimeos layout expects [Bootstrap](https://getbootstrap.com) providing the grid layout!
+
+In order to upload and install the file, follow the following steps:
+
+### Go to the Import View
+
+**Note:** It is recommended to import the Aimeos page tree to a page that is defined as "root page". To create a root page, simply create a new page and, in the "Edit page properties", activate the "Use as Root Page" option under "Behaviour". The icon of the root page will change to a globe. This will also create a basic site configuration. Don't forget to also create a typoscript root template and include the bootstrap templates with it!
+
+![Create a root page](https://user-images.githubusercontent.com/213803/211549273-1d3883dd-710c-4e27-8dbb-3de6e45680d7.jpg)
+
+-   In "Web::Page", right-click on the root page (the one with the globe)
+-   Click on "More options..."
+-   Click on "Import"
+
+![Go to the import view](https://user-images.githubusercontent.com/213803/211550212-df6daa73-74cd-459e-8d25-a56c413c175d.jpg)
+
+### Upload the page tree file
+
+-   In the page import dialog
+-   Select the "Upload" tab (2nd one)
+-   Click on the "Select" dialog
+-   Choose the T3D file you've downloaded
+-   Press the "Upload files" button
+
+![Upload the page tree file](https://user-images.githubusercontent.com/8647429/212347778-17238e05-7494-4413-adb3-a54b2b524e05.png)
+
+### Import the page tree
+
+-   In Import / Export view
+-   Select the uploaded file from the drop-down menu
+-   Click on the "Preview" button
+-   The pages that will be imported are shown below
+-   Click on the "Import" button that has appeared
+-   Confirm to import the pages
+
+![Import the uploaded page tree file](https://user-images.githubusercontent.com/8647429/212348040-c3e10b60-5579-4d1b-becc-72548826c6db.png)
+
+Now you have a new page "Shop" in your page tree including all required sub-pages.
+
+### SEO-friendly URLs
+
+TYPO3 9.5 and later can create SEO friendly URLs if you add the rules to the site config:
+[https://aimeos.org/docs/latest/typo3/setup/#seo-urls](https://aimeos.org/docs/latest/typo3/setup/#seo-urls)
+
+## License
+
+The Aimeos TYPO3 extension is licensed under the terms of the GPL Open Source
+license and is available for free.
+
+## Links
+
+-   [Web site](https://aimeos.org/integrations/typo3-shop-extension/)
+-   [Documentation](https://aimeos.org/docs/TYPO3)
+-   [Forum](https://aimeos.org/help/typo3-extension-f16/)
+-   [Issue tracker](https://github.com/aimeos/aimeos-typo3/issues)
+-   [Source code](https://github.com/aimeos/aimeos-typo3)
