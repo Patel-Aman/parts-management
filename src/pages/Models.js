@@ -3,8 +3,7 @@ import ProductModelCard from "../components/Cards/ProductModelCard";
 import ModelData from "../assets/json/models.json";
 import apiConfig from "../utils/apiConfig";
 import PageTitle from "../components/Typography/PageTitle";
-
-
+import AddProductForm from "../components/Forms/AddProductForm";
 
 const Models = () => {
     const [products, setProducts] = useState([]);
@@ -29,6 +28,8 @@ const Models = () => {
             {products.map((product) => (
                 <ProductModelCard key={product.skuid} product={product} />
             ))}
+            <PageTitle>Add Product</PageTitle>
+            <AddProductForm />
         </div>
     );
 };

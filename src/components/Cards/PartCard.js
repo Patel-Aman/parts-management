@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Card, Badge } from "@windmill/react-ui";
 import DefaultPartImg from "../../assets/img/default-part.png";
+import apiConfig from "../../utils/apiConfig";
 
 function PartCard({ part }) {
     return (
@@ -33,7 +34,7 @@ function PartCard({ part }) {
                 </div>
             </div>
 
-            {/* Additional Details */}
+                {/* Additional Details */}
             <div className="border-t border-gray-200 p-4">
                 <div className="grid grid-cols-2 gap-4">
                     {/* Quantity */}
