@@ -29,13 +29,14 @@ function Login() {
 
         try {
             const response = await axios.post(
-                "http://localhost:8000/api/v1/auth/login",
+                "http://172.31.11.249:8000/api/v1/auth/login",
                 loginData
             );
             const data = response.data;
             if (data.success) {
                 // Handle successful login
-                document.cookie = data.msg.split(";")[0];
+                document.cookie = data.msg.split(";")[0]+"; path=/";
+                console.log(data.msg);
                 localStorage.setItem("token", data.msg.split(";")[0]);
                 console.log(localStorage.getItem("token"));
                 console.log("User logged in:");

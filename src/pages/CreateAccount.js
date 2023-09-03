@@ -10,11 +10,17 @@ import { DownArrow } from "../icons";
 import axios from "axios";
 
 function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [username, setUsername] = useState("");
-    const [role, setRole] = useState("ServiceCentre"); // Default role
+    const [user, setUser] = useState({
+        email:"",password:"",username:"",role:"ServiceCentre"
+    })
+    const [place, setPlace] = useState("Delhi Mall");
+    const [zone, setZone] = useState("North");
     const [errorMessage, setErrorMessage] = useState("");
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUser({...user, [name]: value})
+    }
 
     const roles = [
         "ServiceCentre",
@@ -23,36 +29,45 @@ function Login() {
         "CustomerSupport",
     ];
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
+    const places = [
+        "Laxmi",
+        "Delhi Mall",
+        "Kolkata Mall",
+        "Telugu Mall",
+    ];
+
+    const zones = [
+        "North",
+        "East",
+        "South",
+        "west",
+    ];
+
+    const handlePlaceChange = (e) => {
+        setPlace(e.target.value);
     };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleRoleChange = (e) => {
-        setRole(e.target.value);
-    };
-
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
+    const handleZoneChange = (e) => {
+        setZone(e.target.value);
     };
 
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        const registerData = {
-            username: username,
-            password: password,
-            email: email,
-            role: role,
-        };
+        let registerData = user;
+        if(user.role === "ServiceCentre") {
+             registerData = { ...registerData , employeeAt: place};
+        }
+
+        if(user.role === "WareHouseTeam") {
+            registerData = { ...registerData , employeeAt: zone};
+        }
+
         console.log(registerData);
 
         try {
             const response = await axios.post(
-                "http://localhost:8000/api/v1/auth/register",
+                "http://172.31.11.249:8000/api/v1/auth/register",
                 registerData
             );
             const data = response.data;
@@ -73,10 +88,9 @@ function Login() {
         }
 
         // Reset the form
-        setRole("ServiceCentre");
-        setEmail("");
-        setUsername("");
-        setPassword("");
+        setUser({email:"",password:"",username:"",role:"ServiceCentre"});
+        setPlace("Delhi Mall");
+        setZone("North");
     };
 
     return (
@@ -105,8 +119,8 @@ function Login() {
                             <Label>
                                 <span>Username</span>
                                 <Input
-                                    onChange={handleUsernameChange}
-                                    value={username}
+                                    onChange={handleChange}
+                                    value={user.username}
                                     id="username"
                                     name="username"
                                     type="text"
@@ -117,8 +131,8 @@ function Login() {
                             <Label>
                                 <span>Email</span>
                                 <Input
-                                    onChange={handleEmailChange}
-                                    value={email}
+                                    onChange={handleChange}
+                                    value={user.email}
                                     id="email"
                                     name="email"
                                     type="email"
@@ -131,8 +145,9 @@ function Login() {
                                 <div className="relative inline-block w-full">
                                     <select
                                         className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        value={role}
-                                        onChange={handleRoleChange}
+                                        value={user.role}
+                                        onChange={handleChange}
+                                        name="role"
                                     >
                                         {roles.map((role) => (
                                             <option key={role} value={role}>
@@ -145,11 +160,56 @@ function Login() {
                                     </div>
                                 </div>
                             </Label>
+                            {user.role==="ServiceCentre" &&
+                                <Label>
+                                    <span>Select Place</span>
+                                    <div className="relative inline-block w-full">
+                                        <select
+                                            className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            value={place}
+                                            onChange={handlePlaceChange}
+                                            name="place"
+                                        >
+                                            {places.map((place) => (
+                                                <option key={place} value={place}>
+                                                    {place}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <DownArrow />
+                                        </div>
+                                    </div>
+                                </Label>
+                            }
+
+                            {user.role==="WareHouseTeam" &&
+                                <Label>
+                                    <span>Select Zone</span>
+                                    <div className="relative inline-block w-full">
+                                        <select
+                                            className="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            value={zone}
+                                            onChange={handleZoneChange}
+                                            name={"zone"}
+                                        >
+                                            {zones.map((zone) => (
+                                                <option key={zone} value={zone}>
+                                                    {zone}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                            <DownArrow />
+                                        </div>
+                                    </div>
+                                </Label>
+                            }
                             <Label className="mt-4">
                                 <span>Password</span>
                                 <Input
-                                    onChange={handlePasswordChange}
-                                    value={password}
+                                    onChange={handleChange}
+                                    value={user.password}
                                     id="password"
                                     name="password"
                                     type="password"

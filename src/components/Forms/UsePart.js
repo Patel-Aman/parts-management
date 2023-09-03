@@ -9,7 +9,7 @@ const UsePart = () => {
     ];
     const [parts, setParts] = useState(
         Object.fromEntries(
-            products.map((product) => [product.sku, product.quantity || 0])
+            products.map((product) => [product.skuid, product.quantity || 0])
         )
     );
 

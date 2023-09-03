@@ -10,7 +10,7 @@ const Profile = () => {
         role: "",
         email: "",
         username: "",
-        EmployedAt: "",
+        employedAt: "",
     });
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const Profile = () => {
                                 role: userData.role.slice(1, -1) || "",
                                 email: userData.email || "",
                                 username: userData.username || "",
-                                EmployedAt: userData.EmployedAt || "",
+                                employedAt: userData.employedAt || "",
                             });
                         } else {
                             console.error(
@@ -57,7 +57,7 @@ const Profile = () => {
                         role: userData.role.slice(1, -1) || "",
                         email: userData.email || "",
                         username: userData.username || "",
-                        EmployedAt: userData.EmployedAt || "",
+                        employedAt: userData.employedAt || "",
                     });
                 }
             } catch (error) {
@@ -102,11 +102,11 @@ const Profile = () => {
                             {profileData.email}
                         </p>
                         <br />
-                        {profileData.EmployedAt && (
+                        {profileData.employedAt && (
                             <div>
                                 <p className="font-gray-400">Employed At:</p>
                                 <p className="font-semibold text-lg">
-                                    {profileData.EmployedAt}
+                                    {profileData.employedAt}
                                 </p>
                             </div>
                         )}
