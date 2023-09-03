@@ -4,7 +4,7 @@ import { Input, Label, Button } from "@windmill/react-ui";
 function AddCustomer({ onSubmit }) {
     const [formData, setFormData] = useState({
         customerName: "",
-        skuId: "",
+        productId: "",
         email: "",
     });
 
@@ -20,6 +20,12 @@ function AddCustomer({ onSubmit }) {
         e.preventDefault();
         // Call the onSubmit callback with the form data
         onSubmit(formData);
+
+        setFormData({
+            customerName: "",
+            productId: "",
+            email: "",
+        });
     };
 
     return (
@@ -40,11 +46,11 @@ function AddCustomer({ onSubmit }) {
             <Label>
                 <span>SKU ID / Product ID</span>
                 <Input
-                    id="skuId"
-                    name="skuId"
+                    id="productId"
+                    name="productId"
                     type="text"
                     placeholder="e.g. PRT-BRD-MDL-001"
-                    value={formData.skuId}
+                    value={formData.productId}
                     onChange={handleChange}
                     required
                 />

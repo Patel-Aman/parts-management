@@ -36,6 +36,23 @@ function Header() {
         setIsProfileMenuOpen(!isProfileMenuOpen);
     }
 
+    const handleLogout = () => {
+        // Set the expiration date to a past date
+        function deleteCookie(name) {
+            document.cookie =
+                name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+
+        // Usage example to delete a cookie named "access_token"
+        deleteCookie("access_token");
+
+        // Clear sessionStorage
+        sessionStorage.clear();
+
+        // Clear localStorage
+        localStorage.clear();
+    };
+
     return (
         <header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
             <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
@@ -147,7 +164,7 @@ function Header() {
                             onClose={() => setIsProfileMenuOpen(false)}
                         >
                             <Link to="/app/profile">
-                                <DropdownItem tag="a" href="#">
+                                <DropdownItem>
                                     <OutlinePersonIcon
                                         className="w-4 h-4 mr-3"
                                         aria-hidden="true"
@@ -155,14 +172,14 @@ function Header() {
                                     <span>Profile</span>
                                 </DropdownItem>
                             </Link>
-                            <DropdownItem tag="a" href="#">
+                            <DropdownItem>
                                 <OutlineCogIcon
                                     className="w-4 h-4 mr-3"
                                     aria-hidden="true"
                                 />
                                 <span>Settings</span>
                             </DropdownItem>
-                            <DropdownItem onClick={() => alert("Log out!")}>
+                            <DropdownItem onClick={handleLogout}>
                                 <OutlineLogoutIcon
                                     className="w-4 h-4 mr-3"
                                     aria-hidden="true"

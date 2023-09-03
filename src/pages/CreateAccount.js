@@ -6,8 +6,8 @@ import ImageDark from "../assets/img/create-account-office-dark.jpeg";
 import { GithubIcon, TwitterIcon } from "../icons";
 import { Input, Label, Button } from "@windmill/react-ui";
 
-import apiConfig from "../utils/apiConfig";
 import { DownArrow } from "../icons";
+import axios from "axios";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -51,8 +51,8 @@ function Login() {
         console.log(registerData);
 
         try {
-            const response = await apiConfig.post(
-                "/auth/register",
+            const response = await axios.post(
+                "http://localhost:8000/api/v1/auth/register",
                 registerData
             );
             const data = response.data;
